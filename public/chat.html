@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thragg - Império Viltrumita</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+<body>
+
+    <img class="character" src="imagens/image_POwNNT.png" alt="Grão-Regente Thragg">
+
+    <div class="chat-container">
+
+        <header class="chat-header">
+            <div class="ia-info">
+                <div class="ia-avatar">
+                    <img src="imagens/image_kWJ6el.jpg" alt="Avatar de Thragg">
+                </div>
+                <div>
+                    <h1>THRAGG</h1>
+                    <p><span class="online-dot">●</span> Online</p>
+                </div>
+            </div>
+            <button class="menu-button" type="button">⋮</button>
+        </header>
+
+        <main class="chat-area" id="chatBox">
+            <div class="date">HOJE</div>
+
+            <div class="message ia">
+                <div class="message-avatar">
+                    <img src="imagens/image_kWJ6el.jpg" alt="Thragg">
+                </div>
+                <div class="message-body">
+                    <div class="message-name">THRAGG</div>
+                    <div class="message-bubble">
+                        <p>Saudações, guerreiro.</p>
+                        <p>Eu sou o Grão-Regente Thragg. Como posso ajudá-lo a expandir os domínios do Império Viltrumita?</p>
+                    </div>
+                    <span class="message-time">10:42</span>
+                </div>
+            </div>
+        </main>
+
+        <footer class="chat-footer">
+            <form class="chat-input" id="chatForm">
+                <button type="button" class="add-button">+</button>
+                <input type="text" id="userInput" placeholder="Mensagem..." autocomplete="off">
+                <button type="submit" id="btnSend" class="send-button">➤</button>
+            </form>
+            <div class="powered">THRAGG</div>
+        </footer>
+
+    </div>
+
+    <script>
+        const chatBox = document.querySelector('#chatBox');
+        const userInput = document.querySelector('#userInput');
+        const chatForm = document.querySelector('#chatForm');
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', sender);
+
+            if (sender === 'ia') {
+                msgDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <img src="imagens/image_kWJ6el.jpg" alt="Thragg">
+                    </div>
+                    <div class="message-body">
+                        <div class="message-name">THRAGG</div>
+                        <div class="message-bubble">
+                            <p>${text}</p>
+                        </div>
+                        <span class="message-time">${getCurrentTime()}</span>
+                    </div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="message-body">
+                        <div class="message-bubble">
+                            <p>${text}</p>
+                        </div>
+                        <span class="message-time">${getCurrentTime()}</span>
+                    </div>
+                `;
+            }
+
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return msgDiv;
+        }
+
+        async function sendMessage(e) {
+            if (e) e.preventDefault();
+
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            userInput.value = '';
+
+            const loadingDiv = appendMessage('Pensando...', 'ia');
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+
+                const data = await response.json();
+                const bubble = loadingDiv.querySelector('.message-bubble p');
+
+                if (response.ok) {
+                    bubble.innerText = data.reply;
+                } else {
+                    bubble.innerText = data.erro || 'Erro ao processar a resposta.';
+                }
+            } catch (err) {
+                const bubble = loadingDiv.querySelector('.message-bubble p');
+                bubble.innerText = 'Erro na comunicação com o servidor.';
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', sendMessage);
+    </script>
+</body>
+
+</html>

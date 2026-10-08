@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imperio Viltrumita - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <img src="imagens/Image_2025-06-29_164541327.webp" alt="imagem viltrum" width="500" height="600"> 
+  <form id="bat-form" class="bat-container">
+
+    <label for="email">Email do guerreiro:</label>
+    <input type="email" id="email" name="email" placeholder="Ex: Nolan@gmail.com" required>
+
+    <label for="senha">senha viltrumita:</label>
+    <input type="password" id="senha" name="senha" placeholder="Ex: Viltrum123" required>
+
+    <button type="submit" id="btnEntrar">Entrar no imperio viltrumita</button>
+  </form>
+
+  <div id="mensagemCadastro"> </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    const btnEntrar = document.querySelector('#btnEntrar')
+    const mensagemCadastro = document.querySelector('#mensagemCadastro')
+
+    // Seleciona os IDs exatos dos inputs do formulário de login
+    const LoginEmail = document.querySelector('#email')
+    const LoginSenha = document.querySelector('#senha')
+
+    btnEntrar.addEventListener('click', (event) => {
+      event.preventDefault() // Impede a página de recarregar
+
+      const emailDigitado = LoginEmail.value
+      const senhaDigitada = LoginSenha.value
+
+      // Verifica se preencheu os dois campos
+      if (!emailDigitado || !senhaDigitada) {
+        mensagemCadastro.innerText = 'Preencha todos os campos insolente'
+        return 
+      }
+
+      // Busca as informações gravadas na página de cadastro (index)
+      const emailSalvo = localStorage.getItem('emailSalvo')
+      const senhaSalva = localStorage.getItem('senhaSalva')
+
+      // Valida se o email e senha batem com o que foi cadastrado
+      if (emailDigitado === emailSalvo && senhaDigitada === senhaSalva) {
+        // Redireciona para a página do chat
+        window.location.href = 'chat.html'
+      } else {
+        mensagemCadastro.innerText = 'Credenciais incorretas, insolente!'
+      }
+    })
+  </script>
+  
+</body>
+</html>

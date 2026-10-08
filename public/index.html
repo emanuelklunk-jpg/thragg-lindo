@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imperio Viltrumita - Cadastro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <img src="imagens/Image_2025-06-29_164541327.webp" alt="imagem viltrum" width="500" height="600"> 
+  <form id="bat-form" class="bat-container">
+    <label for="nome">Nome do guerreiro:</label>
+    <input type="text" id="nome" name="nome" placeholder="Ex: Nolan" required>
+
+    <label for="email">Email do guerreiro:</label>
+    <input type="email" id="email" name="email" placeholder="Ex: Nolan@gmail.com" required>
+
+    <label for="senha">senha viltrumita:</label>
+    <input type="password" id="senha" name="senha" placeholder="Ex: Viltrum123" required>
+
+    <button type="submit" id="btnEntrar">Entrar no imperio viltrumita</button>
+  </form>
+
+  <div id="mensagemCadastro"> </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    const btnEntrar = document.querySelector('#btnEntrar')
+    const mensagemCadastro = document.querySelector('#mensagemCadastro')
+
+    const Cadastronome = document.querySelector('#nome')
+    const Cadastroemail = document.querySelector('#email')
+    const Cadastrosenha = document.querySelector('#senha')
+
+    btnEntrar.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      const usuario = Cadastronome.value 
+      const email = Cadastroemail.value
+      const senha = Cadastrosenha.value
+
+      if (!usuario || !email || !senha) {
+        mensagemCadastro.innerText = 'Preencha todos os campos insolente'
+        return 
+      }
+
+      // Salva os dados no navegador para serem usados no Login
+      localStorage.setItem('usuarioSalvo', usuario)
+      localStorage.setItem('emailSalvo', email)
+      localStorage.setItem('senhaSalva', senha)
+
+      // Redireciona para o login (login.html)
+      window.location.href = 'login.html'
+    })
+  </script>
+  
+</body>
+</html>

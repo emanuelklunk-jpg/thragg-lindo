@@ -1,0 +1,21 @@
+{
+  "name": "tharggsfdpg1",
+  "version": "1.0.0",
+  "description": "Chat IA Viltrumita - Regente Thragg",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.19.2",
+    "groq-sdk": "^1.6.0",
+    "path": "^0.12.7",
+    "three": "^0.186.0"
+  }
+}
