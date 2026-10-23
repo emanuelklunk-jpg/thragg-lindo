@@ -8,8 +8,12 @@
 </head>
 <body>
 
-  <img src="imagens/Image_2025-06-29_164541327.webp" alt="imagem viltrum" width="500" height="600"> 
+  
   <form id="bat-form" class="bat-container">
+
+    <img src="imagens/images-removebg-preview.png" alt="imagem logo">
+
+
     <label for="nome">Nome do guerreiro:</label>
     <input type="text" id="nome" name="nome" placeholder="Ex: Nolan" required>
 
@@ -46,12 +50,12 @@
         return 
       }
 
-      // Salva os dados no navegador para serem usados no Login
+     
       localStorage.setItem('usuarioSalvo', usuario)
       localStorage.setItem('emailSalvo', email)
       localStorage.setItem('senhaSalva', senha)
 
-      // Redireciona para o login (login.html)
+     
       window.location.href = 'login.html'
     })
   </script>
